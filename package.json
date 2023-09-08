@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "WAP Client Management Messenger (wcmm)",
   "scripts": {
+    "dev": "pnpm --filter @wcmm/sdk dev",
     "prepare": "husky install"
   },
   "author": "neko113 <alstn113@gmail.com>",
