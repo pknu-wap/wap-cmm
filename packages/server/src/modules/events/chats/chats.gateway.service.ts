@@ -13,11 +13,11 @@ export class ChatsGatewayService {
   }
 
   onConnection(client: Socket) {
-    console.log('onConnection', client);
+    console.log('onConnection');
   }
 
   onDisconnect(client: Socket) {
-    console.log('onDisconnect', client);
+    console.log('onDisconnect');
   }
 
   onMessage(
@@ -26,7 +26,6 @@ export class ChatsGatewayService {
       message: string;
     },
   ) {
-    console.log('onMessage', client, payload);
-    this.server.emit('message', `${client} ${payload}`); // .emit은 모든 클라이언트에게 보내는 것
+    this.server.emit('message', `${client.id} ${payload}`); // .emit은 모든 클라이언트에게 보내는 것
   }
 }

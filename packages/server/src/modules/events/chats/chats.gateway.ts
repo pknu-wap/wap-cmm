@@ -8,7 +8,10 @@ import {
 import { ChatsGatewayService } from './chats.gateway.service';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: { origin: '*' },
+  transports: ['websocket', 'polling'],
+})
 export class ChatsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {

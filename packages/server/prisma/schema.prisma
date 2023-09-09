@@ -1,6 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// pnpm dlx prisma migrate dev --name init
+// pnpm dlx prisma generate
+// pnpm dlx prisma studio
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +12,10 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
 }
