@@ -19,4 +19,14 @@ export class ChatsGatewayService {
   onDisconnect(client: Socket) {
     console.log('onDisconnect', client);
   }
+
+  onMessage(
+    client: Socket,
+    payload: {
+      message: string;
+    },
+  ) {
+    console.log('onMessage', client, payload);
+    this.server.emit('message', `${client} ${payload}`); // .emit은 모든 클라이언트에게 보내는 것
+  }
 }

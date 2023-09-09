@@ -2,6 +2,7 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
+  SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { ChatsGatewayService } from './chats.gateway.service';
@@ -23,5 +24,15 @@ export class ChatsGateway
 
   handleDisconnect(client: Socket) {
     this.chatsGatewayService.onDisconnect(client);
+  }
+
+  @SubscribeMessage('message')
+  handleMessage(
+    client: Socket,
+    payload: {
+      message: string;
+    },
+  ): void {
+    this.chatsGatewayService.onMessage(client, payload);
   }
 }
