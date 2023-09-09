@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvConfig } from './config';
 
 import { PrismaModule } from './prisma/prisma.module';
+import { EventsModule } from './modules';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PrismaModule } from './prisma/prisma.module';
     }),
     PrismaModule,
     // main modules
+    EventsModule,
   ],
 })
 export class AppModule {
