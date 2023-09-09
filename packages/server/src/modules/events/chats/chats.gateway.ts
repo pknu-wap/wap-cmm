@@ -5,8 +5,10 @@ import {
   SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
-import { ChatsGatewayService } from './chats.gateway.service';
+
 import { Server, Socket } from 'socket.io';
+
+import { ChatsGatewayService } from './chats.gateway.service';
 
 @WebSocketGateway({
   cors: { origin: '*' },

@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { EnvConfig } from './config';
-
-import { PrismaModule } from './prisma/prisma.module';
 import { EventsModule } from './modules';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
