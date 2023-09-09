@@ -13,9 +13,9 @@ WAP Client Management Messenger
 ## Structure
 
 - apps
-  - server
-  - web
-  - admin
+  - server (nest.js)
+  - web (next.js)
+  - admin (react.js)
 - packages
-  - ui
-  - sdk
+  - ui (rollup.js)
+  - sdk (rollup.js)
