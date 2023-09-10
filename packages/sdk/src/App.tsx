@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import socketIOClient from 'socket.io-client';
 
 const ENDPOINT = 'http://localhost:8080'; // 서버 주소
@@ -20,6 +21,7 @@ function App() {
       // 컴포넌트 언마운트 시 소켓 해제
       socket.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   const handleSendMessage = () => {
