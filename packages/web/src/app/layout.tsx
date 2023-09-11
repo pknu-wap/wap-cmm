@@ -5,7 +5,7 @@ const rubik = Rubik({ subsets: ['latin'], preload: true });
 
 export const metadata: Metadata = {
   title: 'WCMM',
-  description: 'WAP Client Management Messenger',
+  description: 'WAP Customer Management Messenger',
 };
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
 # WCMM
 
-WAP Client Management Messenger
+WAP Customer Management Messenger
 
 ## Description
 

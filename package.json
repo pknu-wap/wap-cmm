@@ -1,11 +1,11 @@
 {
-  "name": "wcmm",
+  "name": "wap-cmm",
   "version": "1.0.0",
-  "description": "WAP Client Management Messenger (wcmm)",
+  "description": "WAP Customer Management Messenger (wap-cmm)",
   "scripts": {
-    "dev:sdk": "pnpm --filter @wcmm/sdk dev",
-    "dev:web": "pnpm --filter @wcmm/web dev",
-    "dev:server": "pnpm --filter @wcmm/server start:dev",
+    "dev:sdk": "pnpm --filter @wap-cmm/sdk dev",
+    "dev:web": "pnpm --filter @wap-cmm/web dev",
+    "dev:server": "pnpm --filter @wap-cmm/server start:dev",
     "prepare": "husky install"
   },
   "author": "neko113 <alstn113@gmail.com>",

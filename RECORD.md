@@ -1,15 +1,15 @@
-# WAP Client Management Messenger
+# WAP Customer Management Messenger
 
 ## 프로젝트 목표
 
-- **프로젝트 명**: WAP Client Management Messenger
+- **프로젝트 명**: WAP Customer Management Messenger
 
 ### 우선순위
 
 1. **UI Package 결정**:
-   - UI를 `@wcmm/ui`로 라이브러리화할지, 패키지로만 만들 것인지 결정.
+   - UI를 `@wap-cmm/ui`로 라이브러리화할지, 패키지로만 만들 것인지 결정.
 2. **Server Socket API 및 SDK Package 작성**:
-   - Server Socket API 및 SDK 패키지를 개발. `@wcmm/sdk`로 사용자가 사용할 수 있도록 만든다.
+   - Server Socket API 및 SDK 패키지를 개발. `@wap-cmm/sdk`로 사용자가 사용할 수 있도록 만든다.
 3. **Web 및 Server Rest API 개발**:
    - 웹 및 서버 개발.
 4. **Admin 페이지 개발**:
@@ -18,7 +18,7 @@
 ## UI Package
 
 - UI 패키지를 만들 예정.
-- UI는 사용자 인터페이스 개발을 담당하며, `@wcmm/ui`로 라이브러리화할지 패키지로만 만들 것인지 결정 필요.
+- UI는 사용자 인터페이스 개발을 담당하며, `@wap-cmm/ui`로 라이브러리화할지 패키지로만 만들 것인지 결정 필요.
 
 ## Server Socket API & SDK Package
 
