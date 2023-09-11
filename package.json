@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "WAP Customer Management Messenger (wap-cmm)",
   "scripts": {
+    "dev": "pnpm --parallel --stream -r dev",
     "dev:sdk": "pnpm --filter @wap-cmm/sdk dev",
     "dev:web": "pnpm --filter @wap-cmm/web dev",
-    "dev:server": "pnpm --filter @wap-cmm/server start:dev",
+    "dev:server": "pnpm --filter @wap-cmm/server dev",
     "prepare": "husky install"
   },
   "author": "neko113 <alstn113@gmail.com>",
