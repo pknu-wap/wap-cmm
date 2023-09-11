@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { EnvConfig } from './config';
-import { EventsModule } from './modules';
+import { AuthModule, EventsModule, UsersModule } from './modules';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -14,6 +14,8 @@ import { PrismaModule } from './prisma/prisma.module';
     }),
     PrismaModule,
     // main modules
+    AuthModule,
+    UsersModule,
     EventsModule,
   ],
 })
