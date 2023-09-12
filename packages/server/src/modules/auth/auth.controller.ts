@@ -21,7 +21,7 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(GithubGuard)
-  githubAuthCallback(@Req() req: AuthRequest) {
-    return this.authService.socialProviderLogin(req, 'GITHUB');
+  async githubAuthCallback(@Req() req: AuthRequest) {
+    await this.authService.socialProviderLogin(req, 'GITHUB');
   }
 }

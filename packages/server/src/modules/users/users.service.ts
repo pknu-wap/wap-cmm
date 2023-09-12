@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { User } from '@prisma/client';
+
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuthRequest } from '../auth/auth.service';
 
@@ -8,7 +10,9 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async continueWithSocialProvider(req: AuthRequest) {
-    const exUser = await this.prisma.user.findFirst({
+    let user: User;
+
+    user = await this.prisma.user.findFirst({
       where: {
         OR: [
           {
@@ -21,17 +25,15 @@ export class UsersService {
       },
     });
 
-    if (!exUser) {
-      const user = await this.prisma.user.create({
+    if (!user) {
+      user = await this.prisma.user.create({
         data: {
           ...req.user,
           role: 'USER',
         },
       });
-
-      return user;
     }
 
-    return exUser;
+    return user;
   }
 }

@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { Provider, User } from '@prisma/client';
+import { Request } from 'express';
 
 import { UsersService } from '../users/users.service';
 
@@ -22,4 +23,6 @@ export class AuthService {
       throw new BadRequestException();
     }
   }
+
+  generateTokens() {}
 }
