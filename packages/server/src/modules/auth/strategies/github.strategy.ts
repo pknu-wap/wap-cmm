@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 
-import { $Enums } from '@prisma/client';
+import { $Enums, User } from '@prisma/client';
 import { Profile, Strategy } from 'passport-github2';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     profile: Profile,
   ) {
     try {
-      const user = {
+      const user: Omit<User, 'id' | 'role' | 'createdAt' | 'updatedAt'> = {
         provider: $Enums.Provider.GITHUB,
         providerId: profile.id,
         displayName: profile.username ?? profile.displayName,

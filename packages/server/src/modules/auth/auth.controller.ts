@@ -1,10 +1,8 @@
-import { Controller, Get, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 
-import { Response } from 'express';
-
-import { AuthService } from './auth.service';
+import { AuthRequest, AuthService } from './auth.service';
 import { GithubGuard } from './guards/github.guard';
 
 @ApiTags('auth')
@@ -23,7 +21,7 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(GithubGuard)
-  githubAuthCallback(@Res() res: Response) {
-    return this.authService.socialProviderLogin(res, 'GITHUB');
+  githubAuthCallback(@Req() req: AuthRequest) {
+    return this.authService.socialProviderLogin(req, 'GITHUB');
   }
 }
