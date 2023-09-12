@@ -15,8 +15,8 @@ export class AuthService {
 
   async socialProviderLogin(req: AuthRequest, provider: Provider) {
     try {
-      const user = this.usersService.continueWithSocialProvider(req);
-      // set token
+      const user = await this.usersService.continueWithSocialProvider(req);
+      const [accessToken, refreshToken] = await this.generateTokens(user);
       // redirect to client
     } catch (error) {
       console.error(error);
@@ -24,5 +24,10 @@ export class AuthService {
     }
   }
 
-  generateTokens() {}
+  async generateTokens(user: User) {
+    const accessToken = {};
+    const refreshToken = {};
+
+    return [accessToken, refreshToken];
+  }
 }
