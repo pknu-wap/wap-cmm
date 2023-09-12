@@ -1,3 +1,7 @@
-export default function DashBoardLayout() {
-  return <div>DashBoardLayout</div>;
+export default function DashBoardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <div>{children}</div>;
 }
