@@ -11,7 +11,7 @@ export class AuthService {
 
   async socialProviderLogin(res: Response, provider: Provider) {
     try {
-      // const user = this.usersService.continueWithSocialProvider(provider);
+      const user = this.usersService.continueWithSocialProvider(provider);
     } catch (error) {
       console.error(error);
       throw new BadRequestException();

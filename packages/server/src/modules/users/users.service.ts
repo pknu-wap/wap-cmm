@@ -4,5 +4,5 @@ import { Injectable } from '@nestjs/common';
 export class UsersService {
   constructor() {}
 
-  // async continueWithSocialProvider(req: any) {}
+  async continueWithSocialProvider(req: any) {}
 }
