@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { Provider, User } from '@prisma/client';
+import { $Enums, Provider, User } from '@prisma/client';
 import { Request } from 'express';
 
 import { UsersService } from '../users/users.service';
@@ -21,9 +21,12 @@ export class AuthService {
 
   async socialProviderLogin(req: AuthRequest, provider: Provider) {
     try {
+      if (provider == $Enums.Provider.GOOGLE) {
+        // implement google auth
+      }
       const user = await this.usersService.continueWithSocialProvider(req);
       const [accessToken, refreshToken] = await this.generateTokens(user);
-      // redirect to client
+      return { accessToken, refreshToken };
     } catch (error) {
       console.error(error);
       throw new BadRequestException();
