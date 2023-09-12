@@ -32,6 +32,14 @@ function App() {
 
   return (
     <div>
+      <button
+        type="button"
+        onClick={() =>
+          (window.location.href = 'http://localhost:8080/api/auth/github')
+        }
+      >
+        github
+      </button>
       <h1>실시간 채팅 애플리케이션</h1>
       <div>
         {messages.map((msg, index) => (

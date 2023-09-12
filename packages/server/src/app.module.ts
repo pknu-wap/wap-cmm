@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { EnvConfig } from './config';
+import { AuthConfig, EnvConfig } from './config';
 import { AuthModule, EventsModule, UsersModule } from './modules';
 import { PrismaModule } from './prisma/prisma.module';
 
@@ -9,7 +9,7 @@ import { PrismaModule } from './prisma/prisma.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [EnvConfig],
+      load: [EnvConfig, AuthConfig],
       ignoreEnvFile: process.env.NODE_ENV === 'production',
     }),
     PrismaModule,
