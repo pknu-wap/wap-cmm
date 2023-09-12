@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -6,7 +6,7 @@ import { Response } from 'express';
 
 import { AuthRequest, AuthService } from './auth.service';
 import { GithubGuard } from './guards/github.guard';
-import { setTokenCookie } from '../../libs/cookies';
+import { clearTokenCookie, setTokenCookie } from '../../libs/cookies';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -30,5 +30,11 @@ export class AuthController {
     setTokenCookie(res, tokens);
 
     return res.redirect(`${REDIRECT_URL}`);
+  }
+
+  @Delete('logout')
+  async logout(@Res() res: Response) {
+    clearTokenCookie(res);
+    return res.status(200).json({ message: 'Logout success' });
   }
 }
