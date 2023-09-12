@@ -24,7 +24,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn', // 사용하지 않는 변수는 에러가 아닌 경고
     // import
     'import/no-unresolved': 'off', // express import error'
     'import/order': [
