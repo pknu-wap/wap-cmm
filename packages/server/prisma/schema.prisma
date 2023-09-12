@@ -14,8 +14,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Provider {
+  GOOGLE
+  FACEBOOK
+  GITHUB
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id           String    @id @default(uuid())
+  provider     Provider?
+  providerId   String?
+  email        String    @unique
+  password     String
+  displayName  String    @unique
+  profileImage String?
+  role         Role      @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
