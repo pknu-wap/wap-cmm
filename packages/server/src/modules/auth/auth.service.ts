@@ -60,4 +60,8 @@ export class AuthService {
 
     return [accessToken, refreshToken];
   }
+
+  async refreshToken(req: AuthRequest) {
+    // implement refresh token
+  }
 }
