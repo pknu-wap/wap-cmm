@@ -1,4 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 import { Provider, User } from '@prisma/client';
 import { Request } from 'express';
@@ -11,7 +13,11 @@ export interface AuthRequest extends Request {
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+    private readonly usersService: UsersService,
+  ) {}
 
   async socialProviderLogin(req: AuthRequest, provider: Provider) {
     try {
@@ -25,8 +31,29 @@ export class AuthService {
   }
 
   async generateTokens(user: User) {
-    const accessToken = {};
-    const refreshToken = {};
+    const accessToken = await this.jwtService.signAsync(
+      {
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      {
+        secret: this.configService.get<string>('ACCESS_TOKEN.SECRET'),
+        expiresIn: this.configService.get<string>('ACCESS_TOKEN.DURATION'),
+      },
+    );
+
+    const refreshToken = await this.jwtService.signAsync(
+      {
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      {
+        secret: this.configService.get<string>('REFRESH_TOKEN.SECRET'),
+        expiresIn: this.configService.get<string>('REFRESH_TOKEN.DURATION'),
+      },
+    );
 
     return [accessToken, refreshToken];
   }
