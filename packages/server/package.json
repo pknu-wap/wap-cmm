@@ -33,7 +33,7 @@
     "@nestjs/platform-socket.io": "^10.2.4",
     "@nestjs/swagger": "^7.1.10",
     "@nestjs/websockets": "^10.2.4",
-    "@prisma/client": "^5.2.0",
+    "@prisma/client": "^5.3.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "compression": "^1.7.4",

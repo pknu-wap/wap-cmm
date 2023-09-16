@@ -36,5 +36,52 @@ model User {
   role         Role      @default(USER)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @updatedAt
+
+  Channel Channel[]
+  Message Message[]
+}
+
+model Channel {
+  id     String @id @default(uuid())
+  domain String @unique
+
+  administrator   User   @relation(fields: [administratorId], references: [id])
+  administratorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Conversation Conversation[]
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  channel   Channel @relation(fields: [channelId], references: [id])
+  channelId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Message Message[]
+}
+
+model Message {
+  id       String  @id @default(uuid())
+  content  String
+  imageUrl String?
+
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
+
+  manager   User   @relation(fields: [managerId], references: [id])
+  managerId String
+
+  visitorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([managerId, visitorId])
 }
