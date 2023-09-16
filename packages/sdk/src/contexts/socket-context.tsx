@@ -10,9 +10,10 @@ export interface SocketContextValue {
   socket: Socket;
 }
 
-const [SocketProvider, useSocketContext] = createReactContext({
-  name: 'SocketContext',
-  errorMessage: 'useSocketContext must be used within a SocketProvider',
-});
+const [SocketProvider, useSocketContext] =
+  createReactContext<SocketContextValue>({
+    name: 'SocketContext',
+    errorMessage: 'useSocketContext must be used within a SocketProvider',
+  });
 
 export { SocketProvider, useSocketContext };
