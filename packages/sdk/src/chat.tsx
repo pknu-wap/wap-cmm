@@ -8,18 +8,20 @@ function Chat() {
   const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
+    // 메시지 수신 이벤트 핸들러를 등록합니다.
     socket.on('message', (message) => {
       console.log(message);
-      setMessages([...messages, message]);
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
+      // 컴포넌트 언마운트 시 이벤트 핸들러를 해제합니다.
       socket.off('message');
-      socket.disconnect();
     };
   }, [socket]);
 
   const handleSendMessage = () => {
+    // 메시지 전송
     socket.emit('message', message);
     setMessage('');
   };
@@ -32,7 +34,7 @@ function Chat() {
           (window.location.href = 'http://localhost:8080/api/auth/github')
         }
       >
-        github
+        Github 로그인
       </button>
       <h1>실시간 채팅 애플리케이션</h1>
       <div>

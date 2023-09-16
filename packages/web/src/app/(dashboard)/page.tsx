@@ -1,34 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-import socketIOClient from 'socket.io-client';
-
-const ENDPOINT = 'http://localhost:8080'; // 서버 주소
+import { io } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
 
 export default function DashboardPage() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
-  const socket = socketIOClient(ENDPOINT);
+  const socketRef = useRef<Socket>();
 
   useEffect(() => {
-    // 서버로부터 메시지를 받아 상태 업데이트
-    socket.on('message', (message) => {
-      console.log(message);
+    socketRef.current = io('http://localhost:8080').connect();
 
-      setMessages([...messages, message]);
+    // 서버로부터 메시지를 받아 상태 업데이트
+    socketRef.current.on('message', (message) => {
+      console.log(message);
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
-      // 컴포넌트 언마운트 시 소켓 해제
-      socket.disconnect();
+      if (socketRef.current) {
+        socketRef.current?.disconnect();
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
+  }, [socketRef]);
 
   const handleSendMessage = () => {
     // 메시지를 서버로 전송
-    socket.emit('message', message);
+    socketRef.current?.emit('message', message);
     setMessage('');
   };
 
