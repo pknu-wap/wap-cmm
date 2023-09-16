@@ -22,12 +22,9 @@ module.exports = {
   },
   plugins: ['react-refresh'],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
     // import
     'import/no-unresolved': 'off',
+    'import/no-named-as-default-member': 'off', // React. 으로 사용 못해서 off
     'import/default': 'off',
     'import/order': [
       'error',
