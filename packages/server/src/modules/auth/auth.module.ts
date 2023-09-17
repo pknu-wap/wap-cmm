@@ -10,7 +10,7 @@ import { UsersService } from '../users/users.service';
 @Module({
   imports: [JwtModule.register({})],
   controllers: [AuthController],
-  providers: [PrismaService, AuthService, GithubStrategy, UsersService],
+  providers: [PrismaService, AuthService, UsersService, GithubStrategy],
   exports: [],
 })
 export class AuthModule {}

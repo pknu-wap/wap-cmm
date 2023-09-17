@@ -182,6 +182,9 @@ importers:
       passport-github2:
         specifier: ^0.1.12
         version: 0.1.12
+      passport-jwt:
+        specifier: ^4.0.1
+        version: 4.0.1
       prisma:
         specifier: ^5.2.0
         version: 5.2.0
@@ -15706,6 +15709,16 @@ packages:
     engines: { node: '>= 0.8.0' }
     dependencies:
       passport-oauth2: 1.7.0
+    dev: false
+
+  /passport-jwt@4.0.1:
+    resolution:
+      {
+        integrity: sha512-UCKMDYhNuGOBE9/9Ycuoyh7vP6jpeTp/+sfMJl7nLff/t6dps+iaeE0hhNkKN8/HZHcJ7lCdOyDxHdDoxoSvdQ==,
+      }
+    dependencies:
+      jsonwebtoken: 9.0.0
+      passport-strategy: 1.0.0
     dev: false
 
   /passport-oauth2@1.7.0:
