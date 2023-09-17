@@ -1,5 +1,6 @@
 'use client';
 
+import { BASE_URL } from '@/config/config';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Socket, io } from 'socket.io-client';
 
@@ -26,7 +27,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socket = io('http://localhost:8080', {
+    const socket = io(BASE_URL, {
       transports: ['websocket'],
     });
 
