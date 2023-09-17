@@ -14,11 +14,11 @@ export class ChatsGatewayService {
   }
 
   onConnection(client: Socket) {
-    console.log('onConnection');
+    console.log('onConnection', client.id);
   }
 
   onDisconnect(client: Socket) {
-    console.log('onDisconnect');
+    console.log('onDisconnect', client.id);
   }
 
   onMessage(
