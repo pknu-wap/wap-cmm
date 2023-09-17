@@ -1,34 +1,29 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-
-import { io } from 'socket.io-client';
-import { Socket } from 'socket.io-client';
+import { useSocketContext } from '@/providers/socket-provider';
+import { useState, useEffect } from 'react';
 
 export default function DashboardPage() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
-  const socketRef = useRef<Socket>();
+
+  const { socket } = useSocketContext();
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:8080').connect();
-
     // 서버로부터 메시지를 받아 상태 업데이트
-    socketRef.current.on('message', (message) => {
+    socket?.on('message', (message) => {
       console.log(message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current?.disconnect();
-      }
+      socket?.off('message');
     };
-  }, [socketRef]);
+  }, [socket]);
 
   const handleSendMessage = () => {
     // 메시지를 서버로 전송
-    socketRef.current?.emit('message', message);
+    socket?.emit('message', message);
     setMessage('');
   };
 

@@ -1,3 +1,4 @@
+import { SocketProvider } from '@/providers/socket-provider';
 import type { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
 
@@ -15,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={rubik.className}>{children}</body>
+      <body className={rubik.className}>
+        <SocketProvider>{children}</SocketProvider>
+      </body>
     </html>
   );
 }
