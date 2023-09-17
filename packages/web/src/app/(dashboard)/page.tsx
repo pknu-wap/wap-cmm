@@ -1,6 +1,7 @@
 'use client';
 
 import { useSocketContext } from '@/providers/socket-provider';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function DashboardPage() {
@@ -37,6 +38,9 @@ export default function DashboardPage() {
       >
         Github 로그인
       </button>
+      <div>
+        <Link href={`/login`}>Auth Page</Link>
+      </div>
       <h1>실시간 채팅 애플리케이션</h1>
       <div>
         {messages.map((msg, index) => (

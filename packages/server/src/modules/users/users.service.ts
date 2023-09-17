@@ -42,6 +42,13 @@ export class UsersService {
       where: {
         id: userId,
       },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        profileImage: true,
+        displayName: true,
+      },
     });
 
     return user;
