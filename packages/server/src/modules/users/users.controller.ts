@@ -1,8 +1,8 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { UsersService } from './users.service';
-import { AuthRequest } from '../auth/auth.service';
+import { CurrentUser, GetCurrentUser } from '../auth/decorators';
 import { JwtAuthGuard } from '../auth/guards';
 
 @ApiTags('users')
@@ -12,8 +12,9 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
-  async getCurrentUser(@Req() req: AuthRequest) {
-    const userId = req.user.id;
+  async getCurrentUser(
+    @GetCurrentUser('userId') userId: CurrentUser<'userId'>,
+  ) {
     const user = await this.usersServie.getUserById(userId);
 
     return user;

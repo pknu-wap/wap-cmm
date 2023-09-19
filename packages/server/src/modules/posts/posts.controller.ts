@@ -5,14 +5,13 @@ import {
   Get,
   Param,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
-import { AuthRequest } from '../auth/auth.service';
+import { CurrentUser, GetCurrentUser } from '../auth/decorators';
 import { JwtAuthGuard } from '../auth/guards';
 
 @ApiTags('posts')
@@ -32,15 +31,21 @@ export class PostsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async createPost(@Body() dto: CreatePostDto, @Req() req: AuthRequest) {
-    const userId = req.user.id;
+  async createPost(
+    @GetCurrentUser('userId') userId: CurrentUser<'userId'>,
+    @Body() dto: CreatePostDto,
+  ) {
+    console.log('userId', userId);
+
     return this.postsService.createPost(dto.title, dto.body, userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  async deletePost(@Param('id') id: string, @Req() req: AuthRequest) {
-    const userId = req.user.id;
+  async deletePost(
+    @GetCurrentUser('userId') userId: CurrentUser<'userId'>,
+    @Param('id') id: string,
+  ) {
     return this.postsService.deletePost(id, userId);
   }
 }

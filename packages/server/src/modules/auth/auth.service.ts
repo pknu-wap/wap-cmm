@@ -7,11 +7,15 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { $Enums, Provider, User } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
+import { AuthenticatedUser } from './types';
 import { setTokenCookie } from '../../libs/cookies';
 import { UsersService } from '../users/users.service';
 
+/**
+ * @description This is for social provider login
+ */
 export interface AuthRequest extends Request {
   user: User;
 }
@@ -82,7 +86,7 @@ export class AuthService {
     return [accessToken, refreshToken];
   }
 
-  async refreshTokens(req: AuthRequest) {
+  async refreshTokens(req: Request): Promise<AuthenticatedUser> {
     const refreshToken = req.cookies['refresh_token'];
 
     if (!refreshToken) throw new UnauthorizedException('No refresh token');
@@ -100,7 +104,11 @@ export class AuthService {
       setTokenCookie(req.res, { accessToken });
 
       const user = await this.usersService.getUserById(payload.userId);
-      return user;
+      return {
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      };
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
     }

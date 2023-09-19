@@ -2,17 +2,11 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 
-import { $Enums } from '@prisma/client';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
 
 import { UsersService } from '../../users/users.service';
-
-export interface JwtAccessPayload {
-  userId: string;
-  email: string;
-  role: $Enums.Role;
-}
+import { AuthenticatedUser, JwtPayload } from '../types';
 
 @Injectable()
 export class JwtAuthStrategy extends PassportStrategy(Strategy) {
@@ -37,11 +31,15 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     return token;
   }
 
-  async validate(payload: JwtAccessPayload) {
+  async validate(payload: JwtPayload): Promise<AuthenticatedUser> {
     const user = await this.userService.getUserById(payload.userId);
 
     if (!user) throw new UnauthorizedException('Invalid token');
 
-    return user;
+    return {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    };
   }
 }
