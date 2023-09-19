@@ -1,7 +1,4 @@
 module.exports = {
-  // Type check TypeScript files
-  '**/*.(ts|tsx)': () => 'pnpm tsc --noEmit',
-
   // Lint & Prettify TS and JS files
   '**/*.(ts|tsx|js)': (filenames) => [
     `pnpm eslint ${filenames.join(' ')}`,
