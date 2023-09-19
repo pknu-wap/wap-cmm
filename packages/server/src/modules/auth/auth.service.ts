@@ -82,7 +82,7 @@ export class AuthService {
     return [accessToken, refreshToken];
   }
 
-  async refreshTokens(req: AuthRequest, res: Response) {
+  async refreshTokens(req: AuthRequest) {
     const refreshToken = req.cookies['refresh_token'];
 
     if (!refreshToken) throw new UnauthorizedException('No refresh token');
@@ -97,9 +97,7 @@ export class AuthService {
         tokenType: 'ACCESS_TOKEN',
       });
 
-      console.log('여기가 토큰 생성, access token', accessToken);
-
-      setTokenCookie(res, { accessToken });
+      setTokenCookie(req.res, { accessToken });
 
       const user = await this.usersService.getUserById(payload.userId);
       return user;

@@ -17,8 +17,6 @@ export const setTokenCookie = (
     refreshToken?: string;
   },
 ) => {
-  console.log('여기 온다.');
-
   domains.forEach((domain) => {
     res.cookie('access_token', accessToken, {
       httpOnly: true,
