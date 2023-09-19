@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { $Enums, Provider, User } from '@prisma/client';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import { setTokenCookie } from '../../libs/cookies';
 import { UsersService } from '../users/users.service';
@@ -82,7 +82,7 @@ export class AuthService {
     return [accessToken, refreshToken];
   }
 
-  async refreshTokens(req: AuthRequest) {
+  async refreshTokens(req: AuthRequest, res: Response) {
     const refreshToken = req.cookies['refresh_token'];
 
     if (!refreshToken) throw new UnauthorizedException('No refresh token');
@@ -97,7 +97,9 @@ export class AuthService {
         tokenType: 'ACCESS_TOKEN',
       });
 
-      setTokenCookie(req.res, { accessToken });
+      console.log('여기가 토큰 생성, access token', accessToken);
+
+      setTokenCookie(res, { accessToken });
 
       const user = await this.usersService.getUserById(payload.userId);
       return user;

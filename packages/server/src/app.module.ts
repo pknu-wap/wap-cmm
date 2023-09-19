@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AuthConfig, EnvConfig, JwtConfig } from './config';
-import { AuthModule, EventsModule, UsersModule } from './modules';
+import { AuthModule, EventsModule, PostsModule, UsersModule } from './modules';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -17,7 +17,9 @@ import { PrismaModule } from './prisma/prisma.module';
     AuthModule,
     UsersModule,
     EventsModule,
+    PostsModule,
   ],
+  providers: [],
 })
 export class AppModule {
   static PORT: number;

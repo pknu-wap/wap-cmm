@@ -27,15 +27,21 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  static extractJwtFromCookie(req: Request) {
-    let token = null;
+  static extractJwtFromCookie(req: Request): string | null {
+    console.log('extractJwtFromCookie');
+
     if (req && req.cookies) {
-      token = req.cookies['access_token'];
+      const token = req.cookies['access_token'];
+      if (token === 'undefined') return null;
+      return token;
     }
-    return token;
+
+    return null;
   }
 
   async validate(payload: JwtAccessPayload) {
+    console.log('validate', payload);
+
     const user = await this.userService.getUserById(payload.userId);
 
     if (!user) throw new UnauthorizedException('Invalid token');

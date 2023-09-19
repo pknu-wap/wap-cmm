@@ -16,28 +16,33 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(err, user, info, context: ExecutionContext) {
+    console.log(err, user, info);
+    const req = context.switchToHttp().getRequest();
+    const res = context.switchToHttp().getResponse();
+
     if (info) {
       if (
         info instanceof TokenExpiredError &&
-        context.switchToHttp().getRequest().cookies['refresh_token']
+        req.cookies['refresh_token'] !== 'undefined'
       ) {
-        return this.authService.refreshTokens(
-          context.switchToHttp().getRequest(),
-        );
+        console.log('첫번째');
+
+        return this.authService.refreshTokens(req, res);
       }
 
       if (
         info instanceof Error &&
         info.message === 'No auth token' &&
-        context.switchToHttp().getRequest().cookies['refresh_token'] &&
-        !context.switchToHttp().getRequest().cookies['access_token']
+        req.cookies['refresh_token'] !== 'undefined' &&
+        req.cookies['access_token'] === 'undefined'
       ) {
-        return this.authService.refreshTokens(
-          context.switchToHttp().getRequest(),
-        );
+        console.log('두번째');
+        return this.authService.refreshTokens(req, res);
       }
     }
     if (err || !user) {
+      console.log('세번째');
+
       throw err || new UnauthorizedException();
     }
     return user;

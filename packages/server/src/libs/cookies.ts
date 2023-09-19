@@ -17,6 +17,8 @@ export const setTokenCookie = (
     refreshToken?: string;
   },
 ) => {
+  console.log('여기 온다.');
+
   domains.forEach((domain) => {
     res.cookie('access_token', accessToken, {
       httpOnly: true,
@@ -25,13 +27,16 @@ export const setTokenCookie = (
       maxAge: 1000 * 60 * 60 * 1, // 1h
       domain,
     });
-    res.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 30, // 30d
-      domain,
-    });
+
+    if (refreshToken) {
+      res.cookie('refresh_token', refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        maxAge: 1000 * 60 * 60 * 24 * 30, // 30d
+        domain,
+      });
+    }
   });
 };
 

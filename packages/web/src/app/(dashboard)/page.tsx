@@ -41,7 +41,6 @@ export default function DashboardPage() {
       <div>
         <Link href={`/login`}>Auth Page</Link>
       </div>
-      <h1>실시간 채팅 애플리케이션</h1>
       <div>
         {messages.map((msg, index) => (
           <p key={index}>{msg}</p>
