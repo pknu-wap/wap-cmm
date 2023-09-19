@@ -5,8 +5,6 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { TokenExpiredError } from 'jsonwebtoken';
-
 import { AuthService } from '../auth.service';
 
 @Injectable()
