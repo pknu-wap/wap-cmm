@@ -1,10 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { $Enums, Provider, User } from '@prisma/client';
 import { Request } from 'express';
 
+import { setTokenCookie } from '../../libs/cookies';
 import { UsersService } from '../users/users.service';
 
 export interface AuthRequest extends Request {
@@ -28,40 +33,76 @@ export class AuthService {
       const [accessToken, refreshToken] = await this.generateTokens(user);
       return { accessToken, refreshToken };
     } catch (error) {
-      console.error(error);
       throw new BadRequestException();
     }
   }
 
-  async generateTokens(user: User) {
-    const accessToken = await this.jwtService.signAsync(
+  async generateToken({
+    payload,
+    tokenType,
+  }: {
+    payload: {
+      userId: string;
+      email: string;
+      role: $Enums.Role;
+    };
+    tokenType: 'ACCESS_TOKEN' | 'REFRESH_TOKEN';
+  }) {
+    const token = await this.jwtService.signAsync(
       {
-        userId: user.id,
-        email: user.email,
-        role: user.role,
+        userId: payload.userId,
+        email: payload.email,
+        role: payload.role,
       },
       {
-        secret: this.configService.get<string>('ACCESS_TOKEN.SECRET'),
-        expiresIn: this.configService.get<string>('ACCESS_TOKEN.DURATION'),
+        secret: this.configService.get<string>(`${tokenType}.SECRET`),
+        expiresIn: this.configService.get<string>(`${tokenType}.DURATION`),
       },
     );
 
-    const refreshToken = await this.jwtService.signAsync(
-      {
-        userId: user.id,
-        email: user.email,
-        role: user.role,
-      },
-      {
-        secret: this.configService.get<string>('REFRESH_TOKEN.SECRET'),
-        expiresIn: this.configService.get<string>('REFRESH_TOKEN.DURATION'),
-      },
-    );
+    return token;
+  }
+
+  async generateTokens(user: User) {
+    const payload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = await this.generateToken({
+      payload,
+      tokenType: 'ACCESS_TOKEN',
+    });
+    const refreshToken = await this.generateToken({
+      payload,
+      tokenType: 'REFRESH_TOKEN',
+    });
 
     return [accessToken, refreshToken];
   }
 
-  async refreshToken(req: AuthRequest) {
-    // implement refresh token
+  async refreshTokens(req: AuthRequest) {
+    const refreshToken = req.cookies['refresh_token'];
+
+    if (!refreshToken) throw new UnauthorizedException('No refresh token');
+
+    try {
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.configService.get<string>('REFRESH_TOKEN.SECRET'),
+      });
+
+      const accessToken = await this.generateToken({
+        payload,
+        tokenType: 'ACCESS_TOKEN',
+      });
+
+      setTokenCookie(req.res, { accessToken });
+
+      const user = await this.usersService.getUserById(payload.userId);
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
   }
 }

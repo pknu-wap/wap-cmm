@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
+import { TokenExpiredError } from 'jsonwebtoken';
+
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -16,10 +18,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err, user, info, context: ExecutionContext) {
     if (info) {
       if (
-        info.name === 'TokenExpiredError' &&
+        info instanceof TokenExpiredError &&
         context.switchToHttp().getRequest().cookies['refresh_token']
       ) {
-        return this.authService.refreshToken(
+        return this.authService.refreshTokens(
           context.switchToHttp().getRequest(),
         );
       }
@@ -30,7 +32,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         context.switchToHttp().getRequest().cookies['refresh_token'] &&
         !context.switchToHttp().getRequest().cookies['access_token']
       ) {
-        return this.authService.refreshToken(
+        return this.authService.refreshTokens(
           context.switchToHttp().getRequest(),
         );
       }
