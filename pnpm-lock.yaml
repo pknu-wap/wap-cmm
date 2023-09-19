@@ -350,9 +350,18 @@ importers:
         specifier: 13.4.19
         version: 13.4.19(eslint@8.49.0)(typescript@5.1.3)
       eslint-plugin-storybook:
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.49.0)
+      eslint-plugin-prettier:
+        specifier: ^5.0.0
+        version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.49.0)(prettier@3.0.0)
         specifier: ^0.6.13
         version: 0.6.13(eslint@8.49.0)(typescript@5.1.3)
       storybook:
+      prettier:
+        specifier: ^3.0.0
+        version: 3.0.0
         specifier: ^7.4.0
         version: 7.4.0
       typescript:
