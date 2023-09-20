@@ -24,6 +24,21 @@ const PostAPI = {
     const data = await parseJson(response);
     return data;
   },
+  createPost: async () => {
+    const response = await fetch('http://localhost:8080/api/posts', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: 'foo',
+        body: 'bar',
+      }),
+    });
+    const data = await parseJson(response);
+    return data;
+  },
 };
 
 export default PostAPI;
