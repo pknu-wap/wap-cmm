@@ -35,8 +35,6 @@ export class PostsController {
     @GetCurrentUser('userId') userId: CurrentUser<'userId'>,
     @Body() dto: CreatePostDto,
   ) {
-    console.log('userId', userId);
-
     return this.postsService.createPost(dto.title, dto.body, userId);
   }
 
