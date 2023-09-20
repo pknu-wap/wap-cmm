@@ -1,3 +1,4 @@
+import Header from '@/components/header';
 import { SocketProvider } from '@/providers/socket-provider';
 import type { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={rubik.className}>
-        <SocketProvider>{children}</SocketProvider>
+        <SocketProvider>
+          <Header />
+          {children}
+        </SocketProvider>
       </body>
     </html>
   );
