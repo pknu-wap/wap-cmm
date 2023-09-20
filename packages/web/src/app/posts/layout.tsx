@@ -1,5 +1,7 @@
-const PostsLayout = ({ children }: { children: React.ReactNode }) => {
+export default function PostsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <div>{children}</div>;
-};
-
-export default PostsLayout;
+}

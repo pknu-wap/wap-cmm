@@ -1,7 +1,5 @@
 'use client';
 
-const PostsError = () => {
-  return <div>PostsError</div>;
-};
-
-export default PostsError;
+export default function PostsErrorPage() {
+  return <div>ErrorPage</div>;
+}
